@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using TaskManager.Application.DTOs;
 using TaskManager.Application.Services;
 
@@ -11,9 +12,17 @@ public class TasksController : ControllerBase
 
     private readonly TaskService _taskService;
 
-    public TasksController(TaskService taskService)
+    private readonly IValidator<CreateTaskRequest>
+        _createValidator;
+
+    private readonly IValidator<UpdateTaskRequest>
+        _updateValidator;
+
+    public TasksController(TaskService taskService, IValidator<CreateTaskRequest> createValidator, IValidator<UpdateTaskRequest> updateValidator)
     {
         _taskService = taskService;
+        _createValidator = createValidator;
+        _updateValidator = updateValidator;
     }
 
     [HttpPost]
@@ -21,6 +30,19 @@ public class TasksController : ControllerBase
         [FromBody] CreateTaskRequest request,
         CancellationToken cancellationToken)
     {
+
+        var validationResult =
+            await _createValidator.ValidateAsync(
+                request,
+                cancellationToken);
+
+        if (!validationResult.IsValid)
+        {
+            return BadRequest(
+                validationResult.Errors);
+        }
+
+
         var result = await _taskService.AddTaskAsync(
             request,
             cancellationToken);
@@ -67,6 +89,22 @@ public class TasksController : ControllerBase
         [FromBody] UpdateTaskRequest request,
         CancellationToken cancellationToken)
     {
+        var validationResult =
+            await _updateValidator.ValidateAsync(
+                request,
+                cancellationToken);
+
+        if (!validationResult.IsValid)
+        {
+            return BadRequest(new
+            {
+                errors = validationResult.Errors
+                    .Select(x => x.ErrorMessage)
+            });
+        }
+
+
+
         var result = await _taskService.UpdateTaskAsync(
             id,
             request,
