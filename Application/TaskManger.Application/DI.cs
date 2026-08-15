@@ -16,8 +16,8 @@ namespace TaskManager.Application
         {
             services.AddScoped<ITaskService, TaskService>();
 
-            services.AddValidatorsFromAssemblyContaining<
-                CreateTaskRequestValidator>();
+            services.AddValidatorsFromAssembly(
+                typeof(DI).Assembly);
 
             return services;
         }

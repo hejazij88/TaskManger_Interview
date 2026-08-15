@@ -31,9 +31,7 @@ public class TasksControllerTests
             new Mock<IValidator<UpdateTaskRequest>>();
 
         _controller = new TasksController(
-            _taskServiceMock.Object,
-            _createValidatorMock.Object,
-            _updateValidatorMock.Object);
+            _taskServiceMock.Object);
     }
 
     [Fact]

@@ -81,7 +81,6 @@ public class TaskService: ITaskService
         task.SetCompletionStatus(
             request.IsCompleted);
 
-        _taskRepository.Update(task);
 
         await _unitOfWork.SaveChangesAsync(
             cancellationToken);
