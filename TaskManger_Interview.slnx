@@ -1,6 +1,6 @@
 <Solution>
-  <Project Path="API/TaskManger.API/TaskManger.API.csproj" />
-  <Project Path="Application/TaskManger.Application/TaskManger.Application.csproj" />
-  <Project Path="Domain/TaskManger.Domain/TaskManger.Domain.csproj" />
-  <Project Path="Infrastructure/TaskManger.Infrastructure/TaskManger.Infrastructure.csproj" />
+  <Project Path="API/TaskManger.API/TaskManager.API.csproj" />
+  <Project Path="Application/TaskManger.Application/TaskManager.Application.csproj" />
+  <Project Path="Domain/TaskManger.Domain/TaskManager.Domain.csproj" />
+  <Project Path="Infrastructure/TaskManger.Infrastructure/TaskManager.Infrastructure.csproj" />
 </Solution>

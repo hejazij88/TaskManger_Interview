@@ -1,6 +1,6 @@
-﻿using TaskManger.Domain.Entityies;
+﻿using TaskManager.Domain.Entities;
 
-namespace TaskManger.Application.Interfaces;
+namespace TaskManager.Application.Interfaces;
 
 public interface ITaskRepository
 {

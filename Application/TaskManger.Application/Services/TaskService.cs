@@ -1,15 +1,15 @@
-﻿using TaskManger.Application.DTOs;
-using TaskManger.Application.Interfaces;
-using TaskManger.Domain.Entityies;
+﻿using TaskManager.Application.DTOs;
+using TaskManager.Application.Interfaces;
+using TaskManager.Domain.Entities;
 
-namespace TaskManger.Application.Services;
+namespace TaskManager.Application.Services;
 
-public class TaskServices
+public class TaskService
 {
     private readonly ITaskRepository _taskRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public TaskServices(ITaskRepository taskRepository, IUnitOfWork unitOfWork)
+    public TaskService(ITaskRepository taskRepository, IUnitOfWork unitOfWork)
     {
         _taskRepository = taskRepository;
         _unitOfWork = unitOfWork;
@@ -32,17 +32,8 @@ public class TaskServices
         await _unitOfWork.SaveChangesAsync(
             cancellationToken);
 
-        return new TaskResponse
-        {
-            Id = task.Id,
-            Title = task.Title,
-            Description = task.Description,
-            IsCompleted = task.IsCompleted,
-            DueDate = task.DueDate
-        };
+        return MapToResponse(task);
     }
-
-
 
     public async Task<TaskResponse?> GetTaskByIdAsync(
         int id,
@@ -52,21 +43,10 @@ public class TaskServices
             id,
             cancellationToken);
 
-        if (task is null)
-        {
-            return null;
-        }
-
-        return new TaskResponse
-        {
-            Id = task.Id,
-            Title = task.Title,
-            Description = task.Description,
-            IsCompleted = task.IsCompleted,
-            DueDate = task.DueDate
-        };
+        return task is null
+            ? null
+            : MapToResponse(task);
     }
-
 
     public async Task<IReadOnlyList<TaskResponse>> GetTasksAsync(
         CancellationToken cancellationToken)
@@ -75,17 +55,9 @@ public class TaskServices
             cancellationToken);
 
         return tasks
-            .Select(task => new TaskResponse
-            {
-                Id = task.Id,
-                Title = task.Title,
-                Description = task.Description,
-                IsCompleted = task.IsCompleted,
-                DueDate = task.DueDate
-            })
+            .Select(MapToResponse)
             .ToList();
     }
-
 
     public async Task<TaskResponse?> UpdateTaskAsync(
         int id,
@@ -114,14 +86,7 @@ public class TaskServices
         await _unitOfWork.SaveChangesAsync(
             cancellationToken);
 
-        return new TaskResponse
-        {
-            Id = task.Id,
-            Title = task.Title,
-            Description = task.Description,
-            IsCompleted = task.IsCompleted,
-            DueDate = task.DueDate
-        };
+        return MapToResponse(task);
     }
 
     public async Task<bool> DeleteTaskAsync(
@@ -143,5 +108,17 @@ public class TaskServices
             cancellationToken);
 
         return true;
+    }
+
+    private static TaskResponse MapToResponse(TaskItem task)
+    {
+        return new TaskResponse
+        {
+            Id = task.Id,
+            Title = task.Title,
+            Description = task.Description,
+            IsCompleted = task.IsCompleted,
+            DueDate = task.DueDate
+        };
     }
 }

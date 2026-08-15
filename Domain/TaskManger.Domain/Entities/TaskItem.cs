@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TaskManger.Domain.Entityies
+﻿namespace TaskManager.Domain.Entities
 {
     public class TaskItem
     {

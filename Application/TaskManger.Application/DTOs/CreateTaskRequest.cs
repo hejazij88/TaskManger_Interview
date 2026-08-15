@@ -1,4 +1,4 @@
-﻿namespace TaskManger.Application.DTOs;
+﻿namespace TaskManager.Application.DTOs;
 
 public class CreateTaskRequest
 {
