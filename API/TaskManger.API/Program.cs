@@ -1,3 +1,4 @@
+using TaskManager.API.Exception;
 using TaskManager.Application;
 using TaskManager.Infrastructure;
 
@@ -13,6 +14,8 @@ builder.Services.AddApplication();
 
 builder.Services.AddInfrastructure(
     builder.Configuration);
+
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 var app = builder.Build();
 
