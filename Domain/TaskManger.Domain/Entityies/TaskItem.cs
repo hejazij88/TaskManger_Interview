@@ -45,5 +45,10 @@ namespace TaskManger.Domain.Entityies
         {
             IsCompleted = true;
         }
+
+        public void SetCompletionStatus(bool isCompleted)
+        {
+            IsCompleted = isCompleted;
+        }
     }
 }
