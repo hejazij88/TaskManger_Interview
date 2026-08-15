@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using TaskManager.Application.DTOs;
+using TaskManager.Application.Interfaces;
 using TaskManager.Application.Services;
 
 namespace TaskManager.API.Controllers;
@@ -10,15 +11,14 @@ namespace TaskManager.API.Controllers;
 public class TasksController : ControllerBase
 {
 
-    private readonly TaskService _taskService;
-
+    private readonly ITaskService _taskService;
     private readonly IValidator<CreateTaskRequest>
         _createValidator;
 
     private readonly IValidator<UpdateTaskRequest>
         _updateValidator;
 
-    public TasksController(TaskService taskService, IValidator<CreateTaskRequest> createValidator, IValidator<UpdateTaskRequest> updateValidator)
+    public TasksController(ITaskService taskService, IValidator<CreateTaskRequest> createValidator, IValidator<UpdateTaskRequest> updateValidator)
     {
         _taskService = taskService;
         _createValidator = createValidator;

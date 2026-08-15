@@ -4,7 +4,7 @@ using TaskManager.Domain.Entities;
 
 namespace TaskManager.Application.Services;
 
-public class TaskService
+public class TaskService: ITaskService
 {
     private readonly ITaskRepository _taskRepository;
     private readonly IUnitOfWork _unitOfWork;

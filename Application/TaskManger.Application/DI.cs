@@ -1,8 +1,9 @@
-﻿using System;
+﻿using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using FluentValidation;
-using Microsoft.Extensions.DependencyInjection;
+using TaskManager.Application.Interfaces;
 using TaskManager.Application.Services;
 using TaskManager.Application.Validators;
 
@@ -13,7 +14,7 @@ namespace TaskManager.Application
         public static IServiceCollection AddApplication(
             this IServiceCollection services)
         {
-            services.AddScoped<TaskService>();
+            services.AddScoped<ITaskService, TaskService>();
 
             services.AddValidatorsFromAssemblyContaining<
                 CreateTaskRequestValidator>();
